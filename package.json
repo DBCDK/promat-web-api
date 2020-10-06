@@ -1,0 +1,20 @@
+{
+  "name": "promat-web-api",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "repository": "git@github.com:DBCDK/promat-web-api.git",
+  "author": "Esben von Buchwald <esben@vonbuchwald.dk>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "start": "nodemon src/index.ts"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^14.11.5",
+    "nodemon": "^2.0.4",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
+  }
+}
