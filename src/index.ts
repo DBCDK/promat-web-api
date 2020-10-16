@@ -1,7 +1,11 @@
 import * as express from "express";
+import * as cors from "cors";
 import mockOptions from "../mock-data/options";
+import { MediaType } from "../promat-web-shared";
 
 const app = express();
+
+app.use(cors());
 
 const port = 3000;
 
@@ -78,3 +82,5 @@ app.get("/options", (req, res) => {
 app.listen(port, () => {
   console.log("Server has been started");
 });
+
+// COORS
