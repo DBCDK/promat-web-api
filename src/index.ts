@@ -1,4 +1,5 @@
 import * as express from "express";
+import mockOptions from "../mock-data/options";
 
 const app = express();
 
@@ -71,7 +72,7 @@ app.get("/reviewers", (req, res) => {
 
 // Get options for forms
 app.get("/options", (req, res) => {
-  res.send({ message: "hello world" });
+  res.send(mockOptions);
 });
 
 app.listen(port, () => {
