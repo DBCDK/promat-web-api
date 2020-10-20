@@ -1,8 +1,16 @@
 import * as express from "express";
 import * as cors from "cors";
 import mockOptions from "../mock-data/options";
-import { MediaType } from "../promat-web-shared";
+import * as dotenv from "dotenv";
 
+if (!process.env.PROMAT_WEB_API_STAGE) {
+  const { error } = dotenv.config();
+  if (error) {
+    console.error(error);
+    console.error('Environment has not been set up. Make sure to set all required ENV variables or add a .env file. See .env.example for help.')
+    process.exit(1);
+  }
+}
 const app = express();
 
 app.use(cors());
