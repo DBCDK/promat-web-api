@@ -1,5 +1,9 @@
 import * as express from "express";
+import * as session from "express-session";
+import * as Redis from "ioredis";
+import * as connectRedis from "connect-redis";
 import * as cors from "cors";
+
 import mockOptions from "../mock-data/options";
 import * as dotenv from "dotenv";
 
@@ -7,13 +11,41 @@ if (!process.env.PROMAT_WEB_API_STAGE) {
   const { error } = dotenv.config();
   if (error) {
     console.error(error);
-    console.error('Environment has not been set up. Make sure to set all required ENV variables or add a .env file. See .env.example for help.')
+    console.error(
+      "Environment has not been set up. Make sure to set all required ENV variables or add a .env file. See .env.example for help."
+    );
     process.exit(1);
   }
 }
 const app = express();
 
 app.use(cors());
+
+const {
+  REDIS_HOST,
+  REDIS_PORT,
+  REDIS_USERNAME,
+  REDIS_PASSWORD,
+  SESSION_SECRET,
+} = process.env;
+
+const redisClient = new Redis({
+  host: REDIS_HOST,
+  port: REDIS_PORT && parseInt(REDIS_PORT),
+  username: REDIS_USERNAME,
+  password: REDIS_PASSWORD,
+});
+
+const RedisStore = connectRedis(session);
+
+app.use(
+  session({
+    secret: SESSION_SECRET,
+    resave: false,
+    store: new RedisStore({ client: redisClient }),
+    saveUninitialized: true,
+  })
+);
 
 const port = 3000;
 
