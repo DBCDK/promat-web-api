@@ -3,9 +3,10 @@ import * as session from "express-session";
 import * as Redis from "ioredis";
 import * as connectRedis from "connect-redis";
 import * as cors from "cors";
-
-import mockOptions from "../mock-data/options";
 import * as dotenv from "dotenv";
+import { getReviewersHandler } from "./handlers/reviewers";
+import { getOptionsHandler } from "./handlers/options";
+import { findRecordsHandler } from "./handlers/records";
 
 if (!process.env.PROMAT_WEB_API_STAGE) {
   const { error } = dotenv.config();
@@ -105,22 +106,14 @@ app.put("/cases/:id/review", (req, res) => {
 });
 
 // Get records with query params
-app.get("/records", (req, res) => {
-  res.send({ message: "hello world" });
-});
+app.get("/records", findRecordsHandler);
 
 // Get all reviewers
-app.get("/reviewers", (req, res) => {
-  res.send({ message: "hello world" });
-});
+app.get("/reviewers", getReviewersHandler);
 
 // Get options for forms
-app.get("/options", (req, res) => {
-  res.send(mockOptions);
-});
+app.get("/options", getOptionsHandler);
 
 app.listen(port, () => {
   console.log("Server has been started");
 });
-
-// COORS
